@@ -54,7 +54,6 @@ export default function VendorDashboard() {
   const [success, setSuccess] = useState("")
   const router = useRouter()
 
-  // Update the state to include a new item form
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -147,7 +146,6 @@ export default function VendorDashboard() {
     }
   }
 
-  // Update the addDailyItem function to handle creating new items
   const addDailyItem = async () => {
     if (!formData.name || !formData.quantity) {
       setError("Please enter an item name and quantity");
@@ -262,7 +260,6 @@ export default function VendorDashboard() {
       </header>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Welcome Section */}
         <div className="mb-8">
           <h2 className="text-3xl font-bold text-gray-900 mb-2">Vendor Dashboard</h2>
           <p className="text-gray-600">Manage your daily menu and orders</p>
@@ -281,32 +278,16 @@ export default function VendorDashboard() {
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <Label>Item Name</Label>
-                <Input
-                  placeholder="Enter item name"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  required
-                />
+                <Input value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="Enter item name" />
               </div>
-
               <div className="space-y-2">
                 <Label>Description</Label>
-                <Input
-                  placeholder="Enter item description"
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                />
+                <Input value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} placeholder="Enter description" />
               </div>
-
               <div className="space-y-2">
                 <Label>Category</Label>
-                <Select
-                  value={formData.category}
-                  onValueChange={(value) => setFormData({ ...formData, category: value })}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select category" />
-                  </SelectTrigger>
+                <Select value={formData.category} onValueChange={(value) => setFormData({ ...formData, category: value })}>
+                  <SelectTrigger><SelectValue placeholder="Select category" /></SelectTrigger>
                   <SelectContent>
                     <SelectItem value="Main Course">Main Course</SelectItem>
                     <SelectItem value="Beverages">Beverages</SelectItem>
@@ -316,39 +297,17 @@ export default function VendorDashboard() {
                   </SelectContent>
                 </Select>
               </div>
-
               <div className="space-y-2">
-                <Label htmlFor="quantity">Quantity Available</Label>
-                <Input
-                  id="quantity"
-                  type="number"
-                  placeholder="Enter quantity"
-                  value={formData.quantity}
-                  onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
-                  min="1"
-                />
+                <Label htmlFor="quantity">Quantity</Label>
+                <Input type="number" id="quantity" min="1" value={formData.quantity} onChange={(e) => setFormData({ ...formData, quantity: e.target.value })} placeholder="Enter quantity" />
               </div>
-
-              {error && (
-                <Alert className="border-red-200 bg-red-50">
-                  <AlertDescription className="text-red-800">{error}</AlertDescription>
-                </Alert>
-              )}
-
-              {success && (
-                <Alert className="border-green-200 bg-green-50">
-                  <AlertDescription className="text-green-800">{success}</AlertDescription>
-                </Alert>
-              )}
-
-              <Button
-                onClick={addDailyItem}
-                disabled={addLoading || !formData.name || !formData.quantity}
-                className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600"
-              >
+              {error && <Alert className="border-red-200 bg-red-50"><AlertDescription className="text-red-800">{error}</AlertDescription></Alert>}
+              {success && <Alert className="border-green-200 bg-green-50"><AlertDescription className="text-green-800">{success}</AlertDescription></Alert>}
+              <Button onClick={addDailyItem} disabled={addLoading || !formData.name || !formData.quantity} className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600">
                 {addLoading ? "Adding Item..." : "Add to Menu"}
               </Button>
             </CardContent>
+          </Card>
 
           {/* Orders Management */}
           <Card>
@@ -360,28 +319,20 @@ export default function VendorDashboard() {
               <CardDescription>Manage customer orders</CardDescription>
             </CardHeader>
             <CardContent>
-              {orders.filter((order) => order.status === "pending").length === 0 ? (
+              {orders.filter((o) => o.status === "pending").length === 0 ? (
                 <p className="text-gray-500 text-center py-4">No pending orders</p>
               ) : (
                 <div className="space-y-3">
-                  {orders
-                    .filter((order) => order.status === "pending")
-                    .map((order) => (
-                      <div key={order.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                        <div>
-                          <p className="font-medium">{order.item_name}</p>
-                          <p className="text-sm text-gray-500">Customer: {order.customer_name}</p>
-                          <p className="text-sm text-gray-500">{new Date(order.created_at).toLocaleDateString()}</p>
-                        </div>
-                        <Button
-                          size="sm"
-                          onClick={() => updateOrderStatus(order.id, "ready")}
-                          className="bg-green-500 hover:bg-green-600"
-                        >
-                          Mark Ready
-                        </Button>
+                  {orders.filter((o) => o.status === "pending").map((order) => (
+                    <div key={order.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                      <div>
+                        <p className="font-medium">{order.item_name}</p>
+                        <p className="text-sm text-gray-500">Customer: {order.customer_name}</p>
+                        <p className="text-sm text-gray-500">{new Date(order.created_at).toLocaleDateString()}</p>
                       </div>
-                    ))}
+                      <Button size="sm" className="bg-green-500 hover:bg-green-600" onClick={() => updateOrderStatus(order.id, "ready")}>Mark Ready</Button>
+                    </div>
+                  ))}
                 </div>
               )}
             </CardContent>
@@ -435,9 +386,7 @@ export default function VendorDashboard() {
                       <p className="text-sm text-gray-500">{new Date(order.created_at).toLocaleDateString()}</p>
                     </div>
                     <Badge
-                      variant={
-                        order.status === "ready" ? "default" : order.status === "pending" ? "secondary" : "outline"
-                      }
+                      variant={order.status === "ready" ? "default" : order.status === "pending" ? "secondary" : "outline"}
                       className={
                         order.status === "ready"
                           ? "bg-green-100 text-green-800"
@@ -458,5 +407,6 @@ export default function VendorDashboard() {
         </Card>
       </div>
     </div>
-  );
+  )
 }
+

@@ -22,6 +22,15 @@ export function getPool() {
 export async function executeQuery(query: string, params: any[] = []) {
   const connection = getPool()
   try {
+    const command = query.trim().split(" ")[0].toUpperCase()
+
+    // Use .query() for transaction control statements
+    if (["START", "COMMIT", "ROLLBACK"].includes(command)) {
+      const [results] = await connection.query(query)
+      return results
+    }
+
+    // Use .execute() for parameterized queries
     const [results] = await connection.execute(query, params)
     return results
   } catch (error) {
@@ -29,3 +38,5 @@ export async function executeQuery(query: string, params: any[] = []) {
     throw error
   }
 }
+
+
