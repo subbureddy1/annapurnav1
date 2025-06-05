@@ -8,10 +8,11 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Annapurna - Smart Pantry Management",
   description: "Efficient pantry ordering system for employees",
-    generator: 'v0.dev',
-      icons: {
-    icon: '/favicon.ico',
-  }
+  icons: {
+    icon: "/favicon.ico",       // Standard browsers
+    shortcut: "/favicon.ico",   // Safari / legacy
+    apple: "/favicon.ico",      // iOS devices
+  },
 }
 
 export default function RootLayout({
@@ -21,7 +22,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+      </head>
       <body className={inter.className}>{children}</body>
     </html>
   )
 }
+
