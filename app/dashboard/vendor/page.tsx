@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Package, Plus, User, LogOut, CheckCircle, Clock, ShoppingCart } from "lucide-react"
+import Image from 'next/image';
 
 interface UserType {
   id: number
@@ -241,7 +242,12 @@ export default function VendorDashboard() {
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-4">
               <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-amber-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">A</span>
+            <Image
+        src="/ajaimage.png" // Path from public folder
+        alt="Logo"
+        width={60}
+        height={60}
+      />
               </div>
               <h1 className="text-2xl font-bold text-gray-900">Annapurna Vendor</h1>
             </div>

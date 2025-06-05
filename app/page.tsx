@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { CheckCircle, Users, ShoppingCart, Bell } from "lucide-react"
+import Image from 'next/image';
 
 export default function LandingPage() {
   return (
@@ -12,7 +13,12 @@ export default function LandingPage() {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-amber-500 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">A</span>
+             <Image
+        src="/ajaimage.png" // Path from public folder
+        alt="Logo"
+        width={60}
+        height={60}
+      /> 
             </div>
             <span className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
               Annapurna
